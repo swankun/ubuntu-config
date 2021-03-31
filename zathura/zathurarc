@@ -1,0 +1,20 @@
+set selection-clipboard clipboard
+#set recolor-lightcolor "#282C34"   # dark                    
+#set recolor-darkcolor "#F2F2F2"    # dark
+set recolor-darkcolor "#000000"    # light
+#set recolor-lightcolor "#ded9ca"   # light
+set recolor-lightcolor "#ccc4ab"   # light
+set recolor-reverse-video "true"
+set recolor-keephue "true"
+set statusbar-fg "#000000"
+set statusbar-bg "#C2BFA5"
+set inputbar-fg "#FFFFFF"
+set inputbar-bg "#333333"
+set completion-highlight-fg "#F0E68C"
+set completion-highlight-bg "#6B8E23"
+set highlight-color "#CD853F"
+set highlight-active-color "#F0E68C"
+set notification-fg "#FFFFFF"
+set notification-bg "#333333"
+set window-title-basename "true"
+
