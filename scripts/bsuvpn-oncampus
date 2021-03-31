@@ -1,0 +1,7 @@
+active_pid=`pidof openconnect`
+if [ "$active_pid" == "" ]; then
+    echo `cat $HOME/.config/bsuvpn/key` | sudo openconnect bsuvpn-oncampus.boisestate.edu --config=$HOME/.config/bsuvpn/config
+else
+    echo "openconnect is already running: PID=${active_pid}"
+fi
+

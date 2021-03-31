@@ -1,0 +1,6 @@
+background
+quiet
+pid-file=/tmp/openconnect-active-pid
+authgroup=bsuvpn
+user=$USER
+passwd-on-stdin
