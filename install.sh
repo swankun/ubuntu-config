@@ -106,3 +106,12 @@ function install_singularity {
     make -C builddir
     sudo make -C builddir install
 }
+
+update
+install_essentials
+install_vscode
+install_latex
+configure_bsuvpn
+install_julia
+install_singularity
+
