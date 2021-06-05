@@ -2,5 +2,5 @@ active_pid=`pidof openconnect`
 if [ "$active_pid" == "" ]; then
     :
 else
-    sudo kill -SIGINT `cat /tmp/openconnect-active-pid`
+    sudo kill -s SIGINT `cat /tmp/openconnect-active-pid`
 fi

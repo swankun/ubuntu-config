@@ -2,7 +2,15 @@
 
 active_pid=`pidof openconnect`
 if [ "$active_pid" == "" ]; then
-    (echo `cat $HOME/.config/bsuvpn/key`; echo 1) | sudo openconnect bsuvpn-offcampus.boisestate.edu --config=$HOME/.config/bsuvpn/config
+    (echo `cat $HOME/.config/bsuvpn/key`; echo 1) | \
+	sudo openconnect bsuvpn-offcampus.boisestate.edu \
+ 	--background \
+	--quiet \
+	--pid-file=/tmp/openconnect-active-pid \
+	--authgroup=bsuvpn \
+	--user=$USER \
+	--servercert pin-sha256:TQDYhyyWmOp6IVSg+nIB2Jwe/PBUSVzMeRIMGp+1hJI= \
+	--passwd-on-stdin
 else
     echo "openconnect is already running: PID=${active_pid}"
 fi
