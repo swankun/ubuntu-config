@@ -102,7 +102,7 @@ function install_singularity {
     tar -xzf singularity-${SINGULARITY_VERSION}.tar.gz
     rm singularity-${SINGULARITY_VERSION}.tar.gz
     cd singularity
-    ./mconfig
+    sh mconfig
     make -C builddir
     sudo make -C builddir install
 }
