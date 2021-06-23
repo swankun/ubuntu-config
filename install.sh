@@ -93,6 +93,7 @@ function install_singularity {
     wget https://dl.google.com/go/go$GO_VERSION.$OS-$ARCH.tar.gz
     sudo tar -C /usr/local -xzvf go$GO_VERSION.$OS-$ARCH.tar.gz
     rm go$GO_VERSION.$OS-$ARCH.tar.gz
+    export PATH=/usr/local/go/bin:$PATH
     echo 'export PATH=/usr/local/go/bin:$PATH' >> $BASHRCFILE
     source $BASHRCFILE
 
@@ -102,7 +103,7 @@ function install_singularity {
     tar -xzf singularity-${SINGULARITY_VERSION}.tar.gz
     rm singularity-${SINGULARITY_VERSION}.tar.gz
     cd singularity
-    sh mconfig
+    bash mconfig
     make -C builddir
     sudo make -C builddir install
 }
