@@ -51,10 +51,10 @@ function install_latex {
 # BSU VPN
 function configure_bsuvpn {
     cp -r $ROOTDIR/bsuvpn/ $HOME/.config/
-    cp -r $ROOTDIR/scripts/ $HOME/.config/scripts
+    cp -r $ROOTDIR/scripts/ $HOME/.local/bin
     echo "" >> $BASHRCFILE
     echo "# Load VPN scripts" >> $BASHRCFILE
-    echo 'export PATH=$PATH:$HOME/.config/scripts' >> $BASHRCFILE
+    echo 'export PATH=$PATH:$HOME/.local/bin' >> $BASHRCFILE
     source $BASHRCFILE
 }
 
