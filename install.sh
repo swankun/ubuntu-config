@@ -5,7 +5,7 @@ BASHRCFILE=$HOME/.bashrc
 
 function update {
     sudo apt update
-    sudo apt upgrade
+    sudo apt -y upgrade
 }
 
 # Essentials
@@ -33,19 +33,11 @@ function install_vscode {
     rm packages.microsoft.gpg
 }
 
-# Docker
-function install_docker {
-    curl -fsSL https://get.docker.com -o get-docker.sh
-    sh get-docker.sh
-    rm get-docker.sh
-}
-
 # LaTeX
 function install_latex {
     sudo apt install -y texlive-full
     code --install-extension james-yu.latex-workshop
-    code --install-extension ban.spellright
-    ln -s /usr/share/hunspell/* $HOME/.config/Code/Dictionaries
+    code --install-extension valentjn.vscode-ltex
 }
 
 # BSU VPN
@@ -53,20 +45,25 @@ function configure_bsuvpn {
     cp -r $ROOTDIR/bsuvpn/ $HOME/.config/
     cp -r $ROOTDIR/scripts/ $HOME/.local/bin
     echo "" >> $BASHRCFILE
-    echo "# Load VPN scripts" >> $BASHRCFILE
+    echo "# Load local executables" >> $BASHRCFILE
     echo 'export PATH=$PATH:$HOME/.local/bin' >> $BASHRCFILE
     source $BASHRCFILE
 }
 
 # Julia
 function install_julia {
-    mkdir -p $HOME/.local/src/julia && cd $HOME/.local/src/julia
+    build_path=$HOME/.local/src/julia
+    install_path=/usr/local/bin
+    julia_version=1.6.2
+
+    mkdir -p $build_path && cd $build_path
     git clone https://github.com/JuliaLang/julia.git
-    mv julia/ v1.6.0/ && cd v1.6.0/
-    git checkout v1.6.0
+    mv julia/ v$julia_version/ && cd v$julia_version/
+    git checkout v$julia_version
+    echo "MARCH=native" > Make.user
     make -j$(nproc)
     cd /usr/local/bin
-    sudo ln -s $HOME/.local/src/julia/v1.6.0/usr/bin/julia julia
+    sudo ln -s "$HOME/.local/src/julia/v$julia_version/usr/bin/julia" julia
     cd $ROOTDIR
     code --install-extension julialang.language-julia
 }
@@ -88,31 +85,28 @@ function install_platformio {
 
 # Install Singularity
 function install_singularity {
-    export SINGULARITY_VERSION=3.7.0 GO_VERSION=1.16.4 OS=linux ARCH=amd64
+    export SINGULARITY_VERSION=3.8.0 GO_VERSION=1.16.7 OS=linux ARCH=amd64
     cd /tmp
     wget https://dl.google.com/go/go$GO_VERSION.$OS-$ARCH.tar.gz
     sudo tar -C /usr/local -xzvf go$GO_VERSION.$OS-$ARCH.tar.gz
+    sudo ln -s /usr/local/go/bin/go /usr/bin/go
     rm go$GO_VERSION.$OS-$ARCH.tar.gz
-    export PATH=/usr/local/go/bin:$PATH
-    echo 'export PATH=/usr/local/go/bin:$PATH' >> $BASHRCFILE
-    source $BASHRCFILE
 
     sudo apt install -y build-essential libssl-dev uuid-dev libgpgme11-dev squashfs-tools libseccomp-dev wget pkg-config git cryptsetup
     cd $HOME/.local/src
-    wget https://github.com/hpcng/singularity/releases/download/v${SINGULARITY_VERSION}/singularity-${SINGULARITY_VERSION}.tar.gz 
-    tar -xzf singularity-${SINGULARITY_VERSION}.tar.gz
-    rm singularity-${SINGULARITY_VERSION}.tar.gz
+    git clone https://github.com/hpcng/singularity.git
     cd singularity
+    git checkout v$SINGULARITY_VERSION
     bash mconfig
     make -C builddir
     sudo make -C builddir install
 }
 
-update
-install_essentials
-install_vscode
-install_latex
-configure_bsuvpn
-install_julia
-install_singularity
+#update
+#install_essentials
+#install_vscode
+#install_latex
+#configure_bsuvpn
+#install_julia
+#install_singularity
 
