@@ -1,4 +1,4 @@
-global_config]
+[global_config]
   title_transmit_bg_color = "#2e3436"
 [keybindings]
 [layouts]
