@@ -102,6 +102,22 @@ function install_singularity {
     sudo make -C builddir install
 }
 
+function install_wine {
+    DISTRO=focal
+    wget -q https://dl.winehq.org/wine-builds/winehq.key -O- | sudo apt-key add -
+    sudo add-apt-repository "deb https://dl.winehq.org/wine-builds/ubuntu/ $DISTRO main"
+    sudo apt update
+    sudo apt install winehq-stable
+    cd /tmp
+    wget  https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks
+    chmod +x winetricks
+    sudo mv winetricks /usr/bin
+    wget https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks.bash-completion
+    sudo mv winetricks.bash-completion /usr/share/bash-completion/completions/winetricks
+    wget https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks.1
+    sudo mv winetricks.1 /usr/share/man/man1/winetricks.1
+}
+
 #update
 #install_essentials
 #install_vscode
