@@ -38,6 +38,8 @@ function install_latex {
     sudo apt install -y texlive-full
     code --install-extension james-yu.latex-workshop
     code --install-extension valentjn.vscode-ltex
+    sudo cp $ROOTDIR/etc/fonts/conf.d/09-texlive-fonts.conf /etc/fonts/conf.d/09-texlive-fonts.conf
+    sudo fc-cache -fsv
 }
 
 # BSU VPN
